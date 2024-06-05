@@ -42,6 +42,45 @@ public class Authenticate {
 
         return null; // Authentication failed
     }
+    
+    public BaseUser resetGetUser(String username) {
+        BaseUser user = null;
+
+        user = getUser(username, Customer.class);
+        if (user != null) return user;
+
+        user = getUser(username, Staff.class);
+        if (user != null) return user;
+
+        user = getUser(username, Trainer.class);
+        if (user != null) return user;
+
+        return null; 
+    }
+    
+    private <T extends BaseUser> T getUser(
+        String username,
+        Class<T> userClass
+    ) {
+         String queryString = String.format(
+            "SELECT u FROM %s u WHERE u.username = :username",
+            userClass.getSimpleName()
+        );
+        try {
+            T user = em
+                .createQuery(queryString, userClass)
+                .setParameter("username", username)
+                .getSingleResult();
+
+            if (user != null)
+            {
+                return user;
+            }
+        } catch (NoResultException e) {
+            // No user found with the given username in this table
+        }
+        return null;
+    }
 
     private <T extends BaseUser> T authenticate(
         String username,
@@ -58,10 +97,10 @@ public class Authenticate {
                 .setParameter("username", username)
                 .getSingleResult();
 
-                if (user != null)
-                {
-                            if (checkPassword(password, user.getPassword())) {
-                return user;
+            if (user != null)
+            {
+                if (checkPassword(password, user.getPassword())) {
+                    return user;
                 }
             }
         } catch (NoResultException e) {

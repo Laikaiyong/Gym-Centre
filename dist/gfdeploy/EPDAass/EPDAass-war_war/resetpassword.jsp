@@ -14,6 +14,24 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
     </head>
     <body>
+        <script>
+            function swapInput(tag, type) {
+                var el = document.createElement('input');
+                el.id = tag.id;
+                el.type = type;
+                el.name = tag.name;
+                el.value = tag.value;
+                el.classList = tag.classList;
+                tag.parentNode.insertBefore(el, tag);
+                tag.parentNode.removeChild(tag);
+            }
+
+            function toggle_password(target) {
+                var d = document;
+                var tag = d.getElementById(target);
+                swapInput(tag, tag.type === 'text' ? 'password' : 'text');
+            }
+        </script>
                         <form action="resetpassword" method="POST" class="p-8">
             <h1 class="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">Reset Password</h1>
             <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username</label>

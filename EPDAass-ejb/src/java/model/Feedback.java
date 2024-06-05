@@ -25,13 +25,13 @@ public class Feedback implements Serializable {
     
     
     @Column(name = "description")
-    private int description;
+    private String description;
 
-    public int getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(int description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 

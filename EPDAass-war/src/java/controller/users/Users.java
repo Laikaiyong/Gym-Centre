@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.BaseUser;
 import model.Customer;
 import model.Staff;
@@ -37,9 +38,15 @@ public class Users extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         List<Customer> allCust = customerFacade.findAll();
         List<Staff> allStaff = staffFacade.findAll();
-         List<Trainer> allTrainer = trainerFacade.findAll();
+        List<Trainer> allTrainer = trainerFacade.findAll();
+        session.setAttribute("editId", null);
+        session.setAttribute("editRole", null);
+        session.setAttribute("editPasswordId", null);
+        session.setAttribute("editPasswordRole", null);
+        session.setAttribute("addRole", null);
         request.setAttribute("customers", allCust);
         request.setAttribute("staffs", allStaff);
         request.setAttribute("trainers", allTrainer);
@@ -58,5 +65,5 @@ public class Users extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-  }
+    }
 }

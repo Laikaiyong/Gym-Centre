@@ -26,13 +26,19 @@ public class Inventory extends HttpServlet {
 
        @EJB
     private InventoryFacade inventoryFacade;
+              @EJB
+    private GymClassFacade classFacade;
+              
      @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<model.Inventory> inventories = inventoryFacade.findAll();
+        List<GymClass> classes = classFacade.findAll();
 
-        request.setAttribute("classes", inventories);
-        request.getRequestDispatcher("class.jsp").forward(request, response);
+        request.setAttribute("classes", classes);
+
+        request.setAttribute("inventories", inventories);
+        request.getRequestDispatcher("inventory.jsp").forward(request, response);
     }
 
     /**

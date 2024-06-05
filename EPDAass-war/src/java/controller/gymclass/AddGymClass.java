@@ -4,48 +4,41 @@
  */
 package controller.gymclass;
 
+import facade.CommentFacade;
+import facade.FeedbackFacade;
+import facade.GymClassFacade;
+import facade.InventoryFacade;
+import facade.TrainerFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.GymClass;
+import model.Trainer;
 
 /**
  *
  * @author vandycklai
  */
-@WebServlet(name = "AddGymClass", urlPatterns = {"/addgymclass"})
+@WebServlet(name = "AddGymClass", urlPatterns = {"/addGymClass"})
 public class AddGymClass extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddGymClass</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddGymClass at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+        @EJB
+    private GymClassFacade gymClassFacade;
+    @EJB
+    private TrainerFacade trainerFacade;
+    @EJB
+    private InventoryFacade inventoryFacade;
+    @EJB
+    private CommentFacade commentFacade;
+    @EJB
+    private FeedbackFacade feedbackFacade;
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -57,7 +50,12 @@ public class AddGymClass extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+         HttpSession session = request.getSession();
+        session.setAttribute("addClass", "true");
+                List<GymClass> classes = gymClassFacade.findAll();
+        
+                request.setAttribute("classes", classes);
+        request.getRequestDispatcher("class.jsp").forward(request, response);
     }
 
     /**
@@ -71,17 +69,25 @@ public class AddGymClass extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String name = request.getParameter("name");
+        String time = request.getParameter("time");
+        String date = request.getParameter("date");
+        Integer fee = Integer.parseInt(request.getParameter("fee"));
+        GymClass gym = new GymClass();
+        gym.setName(name);
+        gym.setTime(time);
+        gym.setDate(date);
+        gym.setFee(fee);
+        gymClassFacade.create(gym);
+        
+        Trainer trainer = (Trainer) request.getAttribute("user");
+        ArrayList<GymClass> classes = trainer.getClasses();
+        classes.add(gym);
+        trainer.setClasses(classes);
+        trainerFacade.edit(trainer);
+        
+        response.sendRedirect("class");
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+  
 }

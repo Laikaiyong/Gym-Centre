@@ -29,11 +29,18 @@ public class Class extends HttpServlet {
 
        @EJB
     private GymClassFacade classFacade;
+          @EJB
+    private CustomerFacade customerFacade;
      @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<GymClass> classes = classFacade.findAll();
+                                                List<Customer> allCust = customerFacade.findAll();
+        request.setAttribute("customers", allCust);
+        
 
+        request.setAttribute("addClass", null);
+        request.setAttribute("updateClass", null);
         request.setAttribute("classes", classes);
         request.getRequestDispatcher("class.jsp").forward(request, response);
     }

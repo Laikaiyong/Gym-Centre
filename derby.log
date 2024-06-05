@@ -1,7 +1,24 @@
-Fri May 24 23:43:30 MYT 2024 : Apache Derby Network Server - 10.10.2.0 - (1582446) started and ready to accept connections on port 1527
+Wed Jun 05 00:58:14 MYT 2024 : Apache Derby Network Server - 10.10.2.0 - (1582446) started and ready to accept connections on port 1527
 ----------------------------------------------------------------
-Fri May 24 23:43:30 MYT 2024:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-018f-ab45-8413-ffffacb7dbcf 
+Wed Jun 05 00:58:19 MYT 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-018f-e42f-e186-ffffacb7dbcf 
+on database directory /Users/vandycklai/Developer/EPDAass/sample with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@42110406 
+Loaded from file:/Users/vandycklai/GlassFish_Server/javadb/lib/derby.jar
+java.vendor=Eclipse Adoptium
+java.runtime.version=17.0.6+10
+user.dir=/Users/vandycklai/GlassFish_Server/javadb
+os.name=Mac OS X
+os.arch=aarch64
+os.version=14.5
+derby.system.home=/Users/vandycklai/Developer/EPDAass
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Jun 05 09:09:54 MYT 2024:
+Shutting down instance a816c00e-018f-e42f-e186-ffffacb7dbcf on database directory /Users/vandycklai/Developer/EPDAass/sample with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@42110406 
+Wed Jun 05 09:09:54 MYT 2024 Thread[DRDAConnThread_11,5,main] (DATABASE = sample), (DRDAID = {106}), Database 'sample' shutdown.
+----------------------------------------------------------------
+Wed Jun 05 09:09:59 MYT 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance cdd105b8-018f-e42f-e186-ffffacb7dbcf 
 on database directory /Users/vandycklai/Developer/EPDAass/sample with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@42110406 
 Loaded from file:/Users/vandycklai/GlassFish_Server/javadb/lib/derby.jar
 java.vendor=Eclipse Adoptium

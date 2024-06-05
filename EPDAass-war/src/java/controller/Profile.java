@@ -145,7 +145,7 @@ public class Profile extends HttpServlet {
                     return;
             }
 
-                    
+             response.sendRedirect("profile");
 
 
             } catch (Exception e) {

@@ -4,6 +4,9 @@
  */
 package controller;
 
+import facade.CustomerFacade;
+import facade.StaffFacade;
+import facade.TrainerFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.ejb.EJB;
@@ -31,6 +34,16 @@ public class Reset extends HttpServlet {
     @EJB
     private Authenticate authService;
     
+        @EJB
+    private CustomerFacade customerFacade;
+
+    @EJB
+    private TrainerFacade trainerFacade;
+    
+        @EJB
+    private StaffFacade staffFacade;
+
+    
     @Override
     protected void doGet(
         HttpServletRequest request,
@@ -49,10 +62,11 @@ public class Reset extends HttpServlet {
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirm-password");
 
-       if (authService.checkUsername(name)) {
+        String role = authService.checkUserRole(name);
+       if (role.equals("None")) {
             request
                     .getSession()
-                    .setAttribute("resetError", "User does not exist");
+                    .setAttribute("resetError", "Username not register");
             doGet(request, response);
             return;
         }
@@ -66,7 +80,48 @@ public class Reset extends HttpServlet {
        }
 
         try {
-            
+
+            if (!role.equals("None"))
+            {
+                switch(role) {
+                case "staff":
+                    Staff staff =  (Staff) authService.resetGetUser(name);
+                    staff.setPassword(password);
+                    staffFacade.edit(staff);
+                    break;
+                case "customer":
+                    Customer customer =  (Customer) authService.resetGetUser(name);
+                    customer.setPassword(password);
+                    customerFacade.edit(customer);
+                    break;
+                case "trainer":
+                    Trainer trainer =  (Trainer) authService.resetGetUser(name);
+                    trainer.setPassword(password);
+                    trainerFacade.edit(trainer);
+                    break;
+                case "superadmin":
+                    request
+                            .getSession()
+                            .setAttribute("resetError", "Could not reset super admin");
+                    doGet(request, response);
+                    break;
+                default:
+                    request
+                            .getSession()
+                            .setAttribute("resetError", role);
+//                    request
+//                            .getSession()
+//                            .setAttribute("resetError", "User not found");
+                    doGet(request, response);
+                    break;
+                
+            }
+            } else {
+                                    request
+                            .getSession()
+                            .setAttribute("resetError", "Role none detected");
+                    doGet(request, response);
+            }
             
 
         } catch (Exception e) {

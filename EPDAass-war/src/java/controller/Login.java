@@ -51,13 +51,22 @@ public class Login extends HttpServlet {
         BaseUser user = authService.login(username, password);
 
         if (user != null) {
-            // Authentication successful, create a session
+            if (user.getAccountStatus() == 0)
+            {
+            request
+                .getSession()
+                .setAttribute("authError", "Account deactivated");
+            response.sendRedirect("login.jsp?error=Account deactivated");
+            } else {
+                            // Authentication successful, create a session
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
 
             // Redirect based on user role
             String redirectUrl = getRoleBasedRedirectUrl(user, request);
             response.sendRedirect(redirectUrl);
+            }
+
         } else {
             // Authentication failed, redirect to login page with error
             request

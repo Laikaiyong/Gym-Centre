@@ -39,7 +39,6 @@ public class EditUser extends HttpServlet {
     private void populateUserFields(
             BaseUser user,
             String email,
-            String password,
             String phone,
             String nation,
             String location,
@@ -49,7 +48,6 @@ public class EditUser extends HttpServlet {
             int accountStatus,
             String gender
     ) {
-        user.setPassword(password);
         user.setEmail(email);
         user.setNation(nation);
         user.setLocation(location);
@@ -65,6 +63,7 @@ public class EditUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        session.setAttribute("addRole", null);
         session.setAttribute("editId", request.getParameter("id"));
         session.setAttribute("editRole", request.getParameter("role"));
         Long userId = Long.valueOf(request.getParameter("id"));
@@ -120,7 +119,6 @@ public class EditUser extends HttpServlet {
                 HttpSession session = request.getSession();
         Long userId = Long.valueOf(session.getAttribute("editId").toString());
         String email = request.getParameter("email");
-        String password = request.getParameter("password");
         String phone = request.getParameter("phone");
         String nation = request.getParameter("nation");
         String location = request.getParameter("location");
@@ -137,7 +135,7 @@ public class EditUser extends HttpServlet {
                 
 //                        int score = Integer.parseInt(request.getParameter("score"));
 
-                populateUserFields(currentCustomer, email, password, phone, nation, location, age, height, weight, accountStatus, gender);
+                populateUserFields(currentCustomer, email, phone, nation, location, age, height, weight, accountStatus, gender);
 //                currentCustomer.setScore(score);
                 customerFacade.edit(currentCustomer);
 
@@ -145,13 +143,13 @@ public class EditUser extends HttpServlet {
             case "trainer":
                 model.Trainer currentTrainer = trainerFacade.find(userId);
 
-                populateUserFields(currentTrainer, email, password, phone, nation, location, age, height, weight, accountStatus, gender);
+                populateUserFields(currentTrainer, email, phone, nation, location, age, height, weight, accountStatus, gender);
                 trainerFacade.edit(currentTrainer);
                 break;
             case "staff":
                 model.Staff currentStaff = staffFacade.find(userId);
 
-                populateUserFields(currentStaff, email, password, phone, nation, location, age, height, weight, accountStatus, gender);
+                populateUserFields(currentStaff, email, phone, nation, location, age, height, weight, accountStatus, gender);
                 staffFacade.edit(currentStaff);
                 break;
             default:

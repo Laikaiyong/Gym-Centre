@@ -33,7 +33,7 @@
                     <%
                         if (session.getAttribute("userRole") == "staff") {
                     %><li>
-                        <a href="report.jsp" class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages">
+                        <a href="report" class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages">
                             <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
                             <span class="flex-1 ml-3 text-left whitespace-nowrap">Report</span>
 
@@ -48,7 +48,7 @@
                         <ul id="dropdown-sales" class="hidden py-2 space-y-2">
                             <%
                                   if (session.getAttribute("userRole") != null) {
-                                    if ("staff|trainer|superadmin".contains(session.getAttribute("userRole").toString())) {
+                                    if ("staff|superadmin".contains(session.getAttribute("userRole").toString())) {
                             %><li>
                                 <a href="users" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Users</a>
                             </li><%}}%>
@@ -65,11 +65,6 @@
                                 if (session.getAttribute("userRole").toString().equals("trainer")) {
                             %><li>
                                 <a href="feedback" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Feedback</a>
-                            </li><%}%>
-                            <%
-                                if (session.getAttribute("userRole").toString().equals("staff")) {
-                            %><li>
-                                <a href="inventory" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Inventory</a>
                             </li><%}%>
                             <%
                                 if (session.getAttribute("userRole").toString().equals("customer")) {

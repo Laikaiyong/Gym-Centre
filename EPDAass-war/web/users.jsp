@@ -27,6 +27,24 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"  rel="stylesheet" />
     </head>
     <body>
+        <script>
+            function swapInput(tag, type) {
+                var el = document.createElement('input');
+                el.id = tag.id;
+                el.type = type;
+                el.name = tag.name;
+                el.value = tag.value;
+                el.classList = tag.classList;
+                tag.parentNode.insertBefore(el, tag);
+                tag.parentNode.removeChild(tag);
+            }
+
+            function toggle_password(target) {
+                var d = document;
+                var tag = d.getElementById(target);
+                swapInput(tag, tag.type === 'text' ? 'password' : 'text');
+            }
+        </script>
  <button data-drawer-target="default-sidebar" data-drawer-toggle="default-sidebar" aria-controls="default-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
             <span class="sr-only">Open sidebar</span>
             <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -46,7 +64,7 @@
                     <%
                         if (session.getAttribute("userRole") == "staff") {
                     %><li>
-                        <a href="report.jsp" class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages">
+                        <a href="report" class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-pages" data-collapse-toggle="dropdown-pages">
                             <svg aria-hidden="true" class="flex-shrink-0 w-6 h-6 text-gray-400 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path></svg>
                             <span class="flex-1 ml-3 text-left whitespace-nowrap">Report</span>
 
@@ -60,36 +78,29 @@
                         </button>
                         <ul id="dropdown-sales" class="hidden py-2 space-y-2">
                             <%
-                                if (session.getAttribute("userRole").toString().equals("superadmin")) {
+                                  if (session.getAttribute("userRole") != null) {
+                                    if ("staff|superadmin".contains(session.getAttribute("userRole").toString())) {
                             %><li>
-                                <a href="users.jsp" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Users</a>
-                            </li><%}%>
+                                <a href="users" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Users</a>
+                            </li><%}}%>
+ 
                             <%
                                 if (session.getAttribute("userRole") != null) {
                                     if ("staff|trainer|customer".contains(session.getAttribute("userRole").toString())) {
                             %><li>
-                                <a href="class.jsp" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Class</a>
+                                <a href="class" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Class</a>
                             </li><%}
                                 }%>
-                            <%
-                                if (session.getAttribute("userRole").toString().equals("customer")) {
-                            %><li>
-                                <a href="customers.jsp" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Customers</a>
-                            </li><%}%>
+       
                             <%
                                 if (session.getAttribute("userRole").toString().equals("trainer")) {
                             %><li>
-                                <a href="feedback.jsp" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Feedback</a>
-                            </li><%}%>
-                            <%
-                                if (session.getAttribute("userRole").toString().equals("staff")) {
-                            %><li>
-                                <a href="inventory.jsp" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Inventory</a>
+                                <a href="feedback" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Feedback</a>
                             </li><%}%>
                             <%
                                 if (session.getAttribute("userRole").toString().equals("customer")) {
                             %><li>
-                                <a href="comment.jsp" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Comment</a>
+                                <a href="comment" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Comment</a>
                             </li><%}%>
                         </ul>
                     </li>
@@ -100,9 +111,12 @@
                             <svg aria-hidden="true" class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                         </button>
                         <ul id="dropdown-authentication" class="hidden py-2 space-y-2">
-                            <li>
-                                <a href="profile.jsp" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Profile</a>
-                            </li>
+                             <%
+                                if (session.getAttribute("userRole") != null) {
+                                    if ("staff|trainer|customer".contains(session.getAttribute("userRole").toString())) {
+                            %><li>
+                                <a href="profile" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Profile</a>
+                            </li><%}}%>
                             <li>
                                 <form action="Logout" method="POST">
                                     <button type="submit" value="Logout" class="flex items-center p-2 pl-11 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Sign Out</button>
@@ -209,7 +223,7 @@
                                 
                             </form>
                                                                   <%
-                                if (session.getAttribute("userRole").toString().equals("superadmin")) {
+                                if ((session.getAttribute("userRole").toString().equals("superadmin") || session.getAttribute("userRole").toString().equals("staff")) && !customers.isEmpty()) {
                             %><section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
    
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -230,12 +244,12 @@
                     </form>
                 </div>
                 <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    <a href="addUser?role=customer" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                         <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
                         Add customer
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="overflow-x-auto">
@@ -244,14 +258,19 @@
                         <tr>
                             <th scope="col" class="px-4 py-3">Id</th>
                             <th scope="col" class="px-4 py-3">Username</th>
-                            <th scope="col" class="px-4 py-3">Gender</th>
+                            <%
+                                if (session.getAttribute("userRole").toString().equals("superadmin") && !customers.isEmpty()) {
+                            %><th scope="col" class="px-4 py-3">Gender</th>
                             <th scope="col" class="px-4 py-3">Location</th>
                             <th scope="col" class="px-4 py-3">Nation</th>
                             <th scope="col" class="px-4 py-3">Age</th>
                             <th scope="col" class="px-4 py-3">Phone</th>
                             <th scope="col" class="px-4 py-3">Height</th>
-                            <th scope="col" class="px-4 py-3">Weight</th>
+                            <th scope="col" class="px-4 py-3">Weight</th><%}%>
                             <th scope="col" class="px-4 py-3">Account Status</th>
+                                                         <%
+                                if (session.getAttribute("userRole").toString().equals("staff") && !customers.isEmpty()) {
+                            %><th scope="col" class="px-4 py-3">Password</th><%}%>
                             <th scope="col" class="px-4 py-3">Score</th>
                             <th scope="col" class="px-4 py-3">
                                 <span class="sr-only">Actions</span>
@@ -263,18 +282,31 @@
       <tr class="border-b dark:border-gray-700">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> <%= customer.getId() %></th>
                             <td class="px-4 py-3"> <%= customer.getUsername() %></td>
-                            <td class="px-4 py-3"> <%= customer.getGender() %></td>
+                            <%
+                                if (session.getAttribute("userRole").toString().equals("superadmin") && !customers.isEmpty()) {
+                            %><td class="px-4 py-3"> <%= customer.getGender() %></td>
                             <td class="px-4 py-3"> <%= customer.getLocation() %></td>
                             <td class="px-4 py-3"> <%= customer.getNation() %></td>
                             <td class="px-4 py-3"> <%= customer.getAge() %></td>
                             <td class="px-4 py-3"> <%= customer.getPhone() %></td>
                             <td class="px-4 py-3"> <%= customer.getHeight() %></td>
-                            <td class="px-4 py-3"> <%= customer.getWeight() %></td>
+                            <td class="px-4 py-3"> <%= customer.getWeight() %></td><%}%>
                             <td class="px-4 py-3"> <%= customer.getAccountStatus() %></td>
+                                                     <%
+                                if (session.getAttribute("userRole").toString().equals("staff") && !customers.isEmpty()) {
+                            %><td class="px-4 py-3"> <%= customer.getPassword() %></td><%}%>
                             <td class="px-4 py-3"> <%= customer.getScore() %></td>
                             <td class="px-4 py-3 flex items-center justify-end">
-                                <a href="editUser?role=customer&id=<%= customer.getId() %>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    <a href="" class="ml-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                                <%
+                                if (session.getAttribute("userRole").toString().equals("superadmin") && !customers.isEmpty()) {
+                            %>
+                            <a href="editUser?role=customer&id=<%= customer.getId() %>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <a href="" class="ml-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a><%}%>
+                            
+                                                            <%
+                                if (session.getAttribute("userRole").toString().equals("staff") && !customers.isEmpty()) {
+                            %><a href="editPassword?role=customer&id=<%= customer.getId() %>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                            <%}%>
                             </td>
                         </tr>
     <% } %>
@@ -288,7 +320,7 @@
    
                             </section> <%}%>
                                              <%
-                                if (session.getAttribute("userRole").toString().equals("superadmin")) {
+                                if ((session.getAttribute("userRole").toString().equals("superadmin") || session.getAttribute("userRole").toString().equals("staff")) && !trainers.isEmpty()) {
                             %><section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
    
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -296,25 +328,25 @@
         <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
             <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                 <div class="w-full md:w-1/2">
-                    <form class="flex items-center">
-                        <label for="simple-search" class="sr-only">Search</label>
+                    <form action="searchUser" class="flex items-center">
+                        <label for="keyword" class="sr-only">Search</label>
                         <div class="relative w-full">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                                 <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
                                 </svg>
                             </div>
-                            <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
+                            <input type="text" name="keyword" id="keyword" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
                         </div>
                     </form>
                 </div>
                 <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    <a href="addUser?role=trainer" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                         <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
                         Add trainer
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="overflow-x-auto">
@@ -323,14 +355,19 @@
                         <tr>
                             <th scope="col" class="px-4 py-3">Id</th>
                             <th scope="col" class="px-4 py-3">Username</th>
-                            <th scope="col" class="px-4 py-3">Gender</th>
+                             <%
+                                if (session.getAttribute("userRole").toString().equals("superadmin") && !customers.isEmpty()) {
+                            %><th scope="col" class="px-4 py-3">Gender</th>
                             <th scope="col" class="px-4 py-3">Location</th>
                             <th scope="col" class="px-4 py-3">Nation</th>
                             <th scope="col" class="px-4 py-3">Age</th>
                             <th scope="col" class="px-4 py-3">Phone</th>
                             <th scope="col" class="px-4 py-3">Height</th>
-                            <th scope="col" class="px-4 py-3">Weight</th>
+                            <th scope="col" class="px-4 py-3">Weight</th><%}%>
                             <th scope="col" class="px-4 py-3">Account Status</th>
+                                                         <%
+                                if (session.getAttribute("userRole").toString().equals("staff") && !customers.isEmpty()) {
+                            %><th scope="col" class="px-4 py-3">Password</th><%}%>
                             <th scope="col" class="px-4 py-3">
                                 Actions
                             </th>
@@ -341,17 +378,30 @@
       <tr class="border-b dark:border-gray-700">
                             <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"> <%= trainer.getId() %></th>
                             <td class="px-4 py-3"> <%= trainer.getUsername() %></td>
+                                                            <%
+                                if (session.getAttribute("userRole").toString().equals("superadmin") && !customers.isEmpty()) {
+                            %>
                             <td class="px-4 py-3"> <%= trainer.getGender() %></td>
                             <td class="px-4 py-3"> <%= trainer.getLocation() %></td>
                             <td class="px-4 py-3"> <%= trainer.getNation() %></td>
                             <td class="px-4 py-3"> <%= trainer.getAge() %></td>
                             <td class="px-4 py-3"> <%= trainer.getPhone() %></td>
                             <td class="px-4 py-3"> <%= trainer.getHeight() %></td>
-                            <td class="px-4 py-3"> <%= trainer.getWeight() %></td>
+                            <td class="px-4 py-3"> <%= trainer.getWeight() %></td><%}%>
                             <td class="px-4 py-3"> <%= trainer.getAccountStatus() %></td>
+                                                         <%
+                                if (session.getAttribute("userRole").toString().equals("staff") && !customers.isEmpty()) {
+                            %><td class="px-4 py-3"> <%= trainer.getPassword() %></td><%}%>
                             <td class="px-4 py-3 flex items-center justify-end">
+                                                                <%
+                                if (session.getAttribute("userRole").toString().equals("superadmin") && !customers.isEmpty()) {
+                            %>
                     <a href="editUser?role=trainer&id=<%= trainer.getId() %>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                    <a href="" class="ml-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                    <a href="" class="ml-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a><%}%>
+                    
+                    <%
+                                if (session.getAttribute("userRole").toString().equals("staff") && !customers.isEmpty()) {
+                            %><a href="editPassword?role=trainer&id=<%= trainer.getId() %>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a><%}%>
                             </td>
                         </tr>
     <% } %>
@@ -365,7 +415,7 @@
    
                             </section> <%}%>
                                              <%
-                                if (session.getAttribute("userRole").toString().equals("superadmin") || session.getAttribute("userRole").toString().equals("staff")) {
+                                if ((session.getAttribute("userRole").toString().equals("superadmin") || session.getAttribute("userRole").toString().equals("staff")) && !staffs.isEmpty()) {
                             %><section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
    
     <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -386,12 +436,12 @@
                     </form>
                 </div>
                 <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                    <button type="button" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    <a href="addUser?role=staff" type="button" class="flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
                         <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <path clip-rule="evenodd" fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" />
                         </svg>
                         Add staff
-                    </button>
+                    </a>
                 </div>
             </div>
             <div class="overflow-x-auto">
@@ -427,8 +477,12 @@
                             <td class="px-4 py-3"> <%= staff.getWeight() %></td>
                             <td class="px-4 py-3"> <%= staff.getAccountStatus() %></td>
                             <td class="px-4 py-3 flex items-center justify-end">
-                    <a href="editUser?role=staff&id=<%= staff.getId() %>"class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                    
+
+                            <a href="editUser?role=staff&id=<%= staff.getId() %>"class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                     <a href="" class="ml-2 font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                    
+                    
                             </td>
                         </tr>
     <% } %>
@@ -444,14 +498,20 @@
                             
                                              <%
                                              BaseUser editingUser = new BaseUser();
-                                if (session.getAttribute("editRole").equals("customer") && !session.getAttribute("editId").equals(null)) {
+                                             String stringEditId = session.getAttribute("editId") != null ? session.getAttribute("editId").toString() : null;
+                                             String editRole = session.getAttribute("editRole") != null ? session.getAttribute("editRole").toString() : null;
+                                             if (!(stringEditId == null) && !(editRole.equals(null))) {
+                                             Integer editId = Integer.parseInt(stringEditId);
+                                if (editRole.equals("customer") && !(editId == null)) {
                               editingUser = (Customer) session.getAttribute("editCustomer");
-                                                 } else if (session.getAttribute("editRole").equals("trainer") && !session.getAttribute("editId").equals(null)) {
+                                                 } else if (editRole.equals("trainer") && !(editId == null)) {
                               editingUser = (Trainer) session.getAttribute("editTrainer");
-                                                 } else if (session.getAttribute("editRole").equals("staff") && !session.getAttribute("editId").equals(null)) {
+                                                 } else if (editRole.equals("staff") && !(editId == null)) {
                               editingUser = (Staff) session.getAttribute("editStaff");
                                                  } else {}
-                                             if (!session.getAttribute("editId").equals(null)) {
+                                                
+                                                 }
+                                             if (!(stringEditId == null) && session.getAttribute("userRole").toString().equals("superadmin")) {
                             %>
                                 
                             <div class="m-6">
@@ -526,16 +586,6 @@
                                 <input type="number" name="accountStatus" id="accountStatus" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Active Status" value=<%= editingUser.getAccountStatus() %> required="">
                             </div>
                             
-                            
-                            <div class="mb-6">
-                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                                <div class="flex">
-                                    <span onclick="toggle_password('password')" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                        <svg  fill="#000000" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 488.85 488.85" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M244.425,98.725c-93.4,0-178.1,51.1-240.6,134.1c-5.1,6.8-5.1,16.3,0,23.1c62.5,83.1,147.2,134.2,240.6,134.2 s178.1-51.1,240.6-134.1c5.1-6.8,5.1-16.3,0-23.1C422.525,149.825,337.825,98.725,244.425,98.725z M251.125,347.025 c-62,3.9-113.2-47.2-109.3-109.3c3.2-51.2,44.7-92.7,95.9-95.9c62-3.9,113.2,47.2,109.3,109.3 C343.725,302.225,302.225,343.725,251.125,347.025z M248.025,299.625c-33.4,2.1-61-25.4-58.8-58.8c1.7-27.6,24.1-49.9,51.7-51.7 c33.4-2.1,61,25.4,58.8,58.8C297.925,275.625,275.525,297.925,248.025,299.625z"></path> </g> </g></svg>
-                                    </span>
-                                    <input type="password" id="password"class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value=<%= editingUser.getPassword() %> placeholder="•••••••••" name="password" required>
-                                </div>
-                            </div> 
                              <div>
 <label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
                                 <div class="my-2 flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
@@ -564,6 +614,201 @@
                                 </div>
                                 <div class="mt-2 mb-4 text-sm">
                                     <%=session.getAttribute("editUserError")%>
+                                </div>
+                                <div class="flex">
+                                    <button type="button" class="text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800" data-dismiss-target="#alert-additional-content-2" aria-label="Close">
+                                        Dismiss
+                                    </button>
+                                </div>
+                            </div>
+                            <%
+                                }
+                            %>
+                        </form>
+                            </div>
+                            <%}%>
+                            
+                             <%
+                                             String addRole = session.getAttribute("addRole") != null ? session.getAttribute("addRole").toString() : null;
+                                           
+                                             if (session.getAttribute("addRole") != null) {
+                            %>
+                            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                            Add a user
+                        </h1>
+                        <form class="space-y-4 md:space-y-6" action="addUser" method="POST" >
+                            
+                            <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username (Unique ID)</label>
+                            <div class="relative mb-6">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+                                    </svg>
+                                </div>
+                                <input type="text" id="input-group-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="username" placeholder="JohnDoe">
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                                <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
+                                <input type="tel" name="phone" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="0129999999" required="">
+                            </div>
+                                                     
+                            <div>
+                                <label for="nation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nation</label>
+                                <input type="text" name="nation" id="nation" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nation" required="">
+                            </div>   
+                                                                    
+                            <div>
+                                <label for="location" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Location</label>
+                                <input type="text" name="location" id="location" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Location" required="">
+                            </div>  
+                                                                    
+                            <div>
+                                <label for="age" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Age</label>
+                                <input type="number" name="age" id="age" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Age" required="">
+                            </div>
+                                                                
+                            <div>
+                                <label for="height" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Height</label>
+                                <input type="number" name="height" id="height" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Height" required="">
+                            </div>
+                                                   
+                            <div>
+                                <label for="weight" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Weight</label>
+                                <input type="number" name="weight" id="weight" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Weight" required="">
+                            </div>
+                            
+                            
+                            <div class="mb-6">
+                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                <div class="flex">
+                                    <span onclick="toggle_password('password')" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                        <svg  fill="#000000" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 488.85 488.85" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M244.425,98.725c-93.4,0-178.1,51.1-240.6,134.1c-5.1,6.8-5.1,16.3,0,23.1c62.5,83.1,147.2,134.2,240.6,134.2 s178.1-51.1,240.6-134.1c5.1-6.8,5.1-16.3,0-23.1C422.525,149.825,337.825,98.725,244.425,98.725z M251.125,347.025 c-62,3.9-113.2-47.2-109.3-109.3c3.2-51.2,44.7-92.7,95.9-95.9c62-3.9,113.2,47.2,109.3,109.3 C343.725,302.225,302.225,343.725,251.125,347.025z M248.025,299.625c-33.4,2.1-61-25.4-58.8-58.8c1.7-27.6,24.1-49.9,51.7-51.7 c33.4-2.1,61,25.4,58.8,58.8C297.925,275.625,275.525,297.925,248.025,299.625z"></path> </g> </g></svg>
+                                    </span>
+                                    <input type="password" id="password"class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" name="password" required>
+                                </div>
+                            </div> 
+                             <div>
+<label for="gender" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+                                <div class="my-2 flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                                    <input id="bordered-radio-1" type="radio" value="Male" name="gender" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="bordered-radio-1" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Male</label>
+                                </div>
+                                <div class="my-2 flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                                    <input checked id="bordered-radio-2" type="radio" value="Female" name="gender" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                    <label for="bordered-radio-2" class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Female</label>
+                                </div>
+
+                            </div>
+                            <button type="submit" value="addUser" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Register</button>
+                            <%
+                                if (session.getAttribute("addUserError") != null) {
+                            %>
+                            <div id="alert-additional-content-2" class="p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                                <div class="flex items-center">
+                                    <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                    </svg>
+                                    <span class="sr-only">Info</span>
+                                    <h3 class="text-lg font-medium">Error Occured</h3>
+                                </div>
+                                <div class="mt-2 mb-4 text-sm">
+                                    <%=session.getAttribute("adduserError")%>
+                                </div>
+                                <div class="flex">
+                                    <button type="button" class="text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800" data-dismiss-target="#alert-additional-content-2" aria-label="Close">
+                                        Dismiss
+                                    </button>
+                                </div>
+                            </div>
+                            <%
+                                }
+                            %>
+                        </form>
+                    </div>
+                </div>
+                            <%}%>
+                            
+                              <%
+                                             BaseUser editingUser1 = new BaseUser();
+                                             String stringEditId1 = session.getAttribute("editPasswordId") != null ? session.getAttribute("editPasswordId").toString() : null;
+                                             String editRole1 = session.getAttribute("editPasswordRole") != null ? session.getAttribute("editPasswordRole").toString() : null;
+                                             if (!(stringEditId1 == null) && !(editRole1.equals(null))) {
+                                             Integer editId1 = Integer.parseInt(stringEditId1);
+                                if (editRole1.equals("customer") && !(editId1 == null)) {
+                              editingUser1 = (Customer) session.getAttribute("editPasswordCustomer");
+                                                 } else if (editRole1.equals("trainer") && !(editId1 == null)) {
+                              editingUser1 = (Trainer) session.getAttribute("editPasswordTrainer");
+                                                 } else {}
+                                                
+                                                 }
+                                             if (!(stringEditId1 == null) && session.getAttribute("userRole").toString().equals("staff")) {
+                            %>
+                                
+                            <div class="m-6">
+                            <h1 class="mb-4 text-2xl font-extrabold tracking-tight leading-none text-gray-900 md:text-3xl lg:text-6xl dark:text-white">Edit Password</h1>
+                                 <form class="space-y-4 md:space-y-6" action="editPassword" method="POST" >
+                            <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+                            <div class="relative mb-6">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+                                    </svg>
+                                </div>
+                                <input type="text" id="input-group-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="role" value=<%= session.getAttribute("editPasswordRole").toString() %> disabled="true" placeholder="JohnDoe">
+                            </div>
+                            <label for="inputgroup-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ID</label>
+                            <div class="relative mb-6">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+                                    </svg>
+                                </div>
+                                <input type="text" id="inputgroup-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="id" value=<%= editingUser1.getId() %> disabled="true" placeholder="JohnDoe">
+                            </div>
+                            
+                            <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Username (Unique ID)</label>
+                            <div class="relative mb-6">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+                                    </svg>
+                                </div>
+                                <input type="text" id="input-group-1" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="username" value=<%= editingUser1.getUsername() %> disabled="true" placeholder="JohnDoe">
+                            </div>
+                            
+                            <div class="mb-6">
+                                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                                <div class="flex">
+                                    <span onclick="toggle_password('password')" class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                                        <svg  fill="#000000" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 488.85 488.85" xml:space="preserve"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path d="M244.425,98.725c-93.4,0-178.1,51.1-240.6,134.1c-5.1,6.8-5.1,16.3,0,23.1c62.5,83.1,147.2,134.2,240.6,134.2 s178.1-51.1,240.6-134.1c5.1-6.8,5.1-16.3,0-23.1C422.525,149.825,337.825,98.725,244.425,98.725z M251.125,347.025 c-62,3.9-113.2-47.2-109.3-109.3c3.2-51.2,44.7-92.7,95.9-95.9c62-3.9,113.2,47.2,109.3,109.3 C343.725,302.225,302.225,343.725,251.125,347.025z M248.025,299.625c-33.4,2.1-61-25.4-58.8-58.8c1.7-27.6,24.1-49.9,51.7-51.7 c33.4-2.1,61,25.4,58.8,58.8C297.925,275.625,275.525,297.925,248.025,299.625z"></path> </g> </g></svg>
+                                    </span>
+                                    <input type="password" id="password"class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" value=<%= editingUser1.getPassword() %> name="password" required>
+                                </div>
+                            </div> 
+
+                 
+
+                            <button type="submit" value="editPassword" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Edit</button>
+                            <%
+                                if (session.getAttribute("editPasswordError") != null) {
+                            %>
+                            <div id="alert-additional-content-2" class="p-4 mb-4 text-red-800 border border-red-300 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400 dark:border-red-800" role="alert">
+                                <div class="flex items-center">
+                                    <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                                    </svg>
+                                    <span class="sr-only">Info</span>
+                                    <h3 class="text-lg font-medium">Error Occured</h3>
+                                </div>
+                                <div class="mt-2 mb-4 text-sm">
+                                    <%=session.getAttribute("editPasswordError")%>
                                 </div>
                                 <div class="flex">
                                     <button type="button" class="text-red-800 bg-transparent border border-red-800 hover:bg-red-900 hover:text-white focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:hover:bg-red-600 dark:border-red-600 dark:text-red-500 dark:hover:text-white dark:focus:ring-red-800" data-dismiss-target="#alert-additional-content-2" aria-label="Close">

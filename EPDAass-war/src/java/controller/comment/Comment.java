@@ -15,6 +15,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.GymClass;
 
 /**
@@ -30,7 +31,9 @@ public class Comment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<model.Comment> comments = commentFacade.findAll();
-
+                 HttpSession session = request.getSession();
+        session.setAttribute("addGym", null);
+        session.setAttribute("addComment", null);
         request.setAttribute("comments", comments);
         request.getRequestDispatcher("comment.jsp").forward(request, response);
     }

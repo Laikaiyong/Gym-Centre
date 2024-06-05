@@ -4,6 +4,7 @@
  */
 package controller.feedback;
 
+import facade.CustomerFacade;
 import facade.FeedbackFacade;
 import facade.GymClassFacade;
 import java.io.IOException;
@@ -15,7 +16,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Comment;
+import model.Customer;
 import model.GymClass;
+import model.Inventory;
+import model.Staff;
+import model.Trainer;
 
 /**
  *
@@ -26,13 +33,19 @@ public class Feedback extends HttpServlet {
 
        @EJB
     private FeedbackFacade feedbackFacade;
+           @EJB
+    private CustomerFacade customerFacade;
      @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<model.Feedback> feedbacks = feedbackFacade.findAll();
-
-        request.setAttribute("feedbacks", feedbacks);
-        request.getRequestDispatcher("class.jsp").forward(request, response);
+        
+                 HttpSession session = request.getSession();
+                         List<Customer> allCust = customerFacade.findAll();
+        request.setAttribute("customers", allCust);
+                request.setAttribute("addGym", null);
+        request.setAttribute("addComment", null);
+        
+        request.getRequestDispatcher("feedback.jsp").forward(request, response);
     }
 
     /**

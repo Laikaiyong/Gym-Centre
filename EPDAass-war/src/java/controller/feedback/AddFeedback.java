@@ -4,60 +4,57 @@
  */
 package controller.feedback;
 
+import facade.CommentFacade;
+import facade.CustomerFacade;
+import facade.FeedbackFacade;
+import facade.GymClassFacade;
+import facade.TrainerFacade;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Comment;
+import model.Customer;
+import model.Feedback;
+import model.GymClass;
+import model.Trainer;
 
 /**
  *
  * @author vandycklai
  */
-@WebServlet(name = "AddFeedback", urlPatterns = {"/AddFeedback"})
+@WebServlet(name = "AddFeedback", urlPatterns = {"/addFeedback"})
 public class AddFeedback extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AddFeedback</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AddFeedback at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
+       @EJB
+    private CustomerFacade customerFacade;
+       @EJB
+    private CommentFacade commentFacade;
+       @EJB
+    private FeedbackFacade feedbackFacade;
+       @EJB
+    private TrainerFacade trainerFacade;
+       @EJB
+    private GymClassFacade classFacade;
+     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+                 HttpSession session = request.getSession();
+                 Long gymId = Long.valueOf(request.getParameter("id"));
+                        GymClass gym = (GymClass) classFacade.find(gymId);
+                        session.setAttribute("addGym", gym);
+               session.setAttribute("addFeedback", "true");
+               
+                                        List<Customer> allCust = customerFacade.findAll();
+        request.setAttribute("customers", allCust);
+
+        request.getRequestDispatcher("feedback.jsp").forward(request, response);
     }
 
     /**
@@ -71,17 +68,24 @@ public class AddFeedback extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+                         HttpSession session = request.getSession();
+        String description = request.getParameter("desc");
+        Feedback feedback = new Feedback();
+        feedback.setDescription(description);
+        feedbackFacade.create(feedback);
+        
+        GymClass gym = (GymClass) session.getAttribute("addGym");
+        ArrayList<Feedback> feedbacks1 = gym.getFeedback();
+                feedbacks1.add(feedback);
+        gym.setFeedback(feedbacks1);
+        classFacade.edit(gym);
+        
+               Trainer trainer = (Trainer) session.getAttribute("user");
+        ArrayList<Feedback> feedbacks = trainer.getFeedbacks();
+                feedbacks.add(feedback);
+        trainer.setFeedbacks(feedbacks);
+        trainerFacade.edit(trainer);
+        
+        response.sendRedirect("feedback");
+  }
 }
