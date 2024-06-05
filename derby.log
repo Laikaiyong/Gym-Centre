@@ -29,3 +29,9 @@ os.arch=aarch64
 os.version=14.5
 derby.system.home=/Users/vandycklai/Developer/EPDAass
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Wed Jun 05 10:32:52 MYT 2024: Shutting down Derby engine
+----------------------------------------------------------------
+Wed Jun 05 10:32:52 MYT 2024:
+Shutting down instance cdd105b8-018f-e42f-e186-ffffacb7dbcf on database directory /Users/vandycklai/Developer/EPDAass/sample with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@42110406 
+----------------------------------------------------------------

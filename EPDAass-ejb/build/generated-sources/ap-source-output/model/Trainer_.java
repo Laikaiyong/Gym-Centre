@@ -6,7 +6,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import model.Feedback;
 import model.GymClass;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-05T10:06:38")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-05T10:26:14")
 @StaticMetamodel(Trainer.class)
 public class Trainer_ extends BaseUser_ {
 

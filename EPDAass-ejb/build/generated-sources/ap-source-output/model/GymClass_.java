@@ -8,7 +8,7 @@ import model.Comment;
 import model.Feedback;
 import model.Inventory;
 
-@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-05T10:06:38")
+@Generated(value="EclipseLink-2.7.12.v20230209-rNA", date="2024-06-05T10:26:14")
 @StaticMetamodel(GymClass.class)
 public class GymClass_ { 
 

@@ -7,8 +7,8 @@
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/Profile.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/web/feedback.jsp</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/feedback/UpdateFeedback.java</file>
-            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/gymclass/DeleteGymClass.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/users/AddUser.java</file>
+            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/gymclass/EnrolGymClass.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/web/users.jsp</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/Report.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/users/DeleteUser.java</file>
@@ -16,11 +16,10 @@
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/conf/MANIFEST.MF</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/web/home.jsp</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/web/profile.jsp</file>
-            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/gymclass/AddGymClass.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/inventory/EditInventory.java</file>
+            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/gymclass/AddGymClass.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/inventory/Inventory.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/web/class.jsp</file>
-            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/comment/DeleteComment.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/users/SearchUser.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/Logout.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/web/register.jsp</file>
@@ -28,21 +27,20 @@
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/web/inventory.jsp</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/feedback/Feedback.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/comment/Comment.java</file>
+            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/gymclass/UpdateGymClass.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/gymclass/Class.java</file>
-            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/DataSeeder.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/web/login.jsp</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/web/resetpassword.jsp</file>
-            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/feedback/DeleteFeedback.java</file>
-            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/inventory/DeleteInventory.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/feedback/AddFeedback.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/Register.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/users/EditUser.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/comment/AddComment.java</file>
-            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/gymclass/EditGymClass.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/Login.java</file>
-            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/comment/UpdateComment.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/Reset.java</file>
+            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/feedback/ViewFeedback.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/users/EditPassword.java</file>
+            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/gymclass/ViewGymDetails.java</file>
+            <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/comment/ViewCustomerComment.java</file>
             <file>file:/Users/vandycklai/Developer/EPDAass/EPDAass-war/src/java/controller/users/Users.java</file>
         </group>
     </open-files>
